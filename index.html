@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="./main.css">
+  <title>Vue.js Todo App</title>
+</head>
+
+<body>
+  <div id="app">
+    <el-container>
+
+      <el-header>
+        <el-row>
+          <el-col :span="24">
+            <h1>Todo List</h1>
+          </el-col>
+        </el-row>
+      </el-header>
+
+      <el-main>
+
+        <el-row>
+          <el-col :span="24">
+            <el-progress :text-inside="true" :stroke-width="25" :percentage="rate" status="success"></el-progress>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+            <h3>Add Todo</h3>
+          </el-col>
+        </el-row>
+
+        <form v-on:submit.prevent="doAdd">
+          <el-row>
+            <el-col :span="24">
+              <el-input placeholder="something todo" v-model="comment"></el-input>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-button type="primary" v-on:click="doAdd" style="width: 100%; margin-top: 10px;">Add</el-button>
+            </el-col>
+          </el-row>
+        </form>
+        </el-row>
+
+        <el-row class="select-state">
+          <el-col :span="24">
+            <el-radio-group v-model="current" size="medium">
+              <el-radio-button v-for="label in options" :label="label.value">{{ label.label }}</el-radio-button>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+
+        <el-col :span="24">
+          <p>Showing : {{ computedTodos.length }}</p>
+        </el-col>
+
+        <el-col :span="24">
+          <el-table :data="computedTodos" style="width: 100%">
+
+            <el-table-column prop="comment" label="todo">
+            </el-table-column>
+
+            <el-table-column label="state" width="80">
+              <template slot-scope="scope">
+                <el-button size="mini" type="primary" plain @click="doChangeState(scope.row)" style="width: 60px;">{{
+                  labels[scope.row.state] }}</el-button>
+              </template>
+            </el-table-column>
+
+            <el-table-column label="" width="70">
+              <template slot-scope="scope">
+                <el-button size="mini" type="danger" @click="doRemove(scope.row)" icon="el-icon-delete"></el-button>
+              </template>
+            </el-table-column>
+
+          </el-table>
+        </el-col>
+
+
+      </el-main>
+    </el-container>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+  <script src="./main.js"></script>
+</body>
+
+</html>
